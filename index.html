@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arthur Fournier — Robotics &amp; computer vision</title>
+<meta name="description" content="Engineering student at École polytechnique and Mines Paris, working on event-based vision and 3D perception for mobile robots.">
+
+<!-- ============================================================
+     TODO before going live: replace GITHUB_USERNAME everywhere,
+     and set the two URLs below to your real page address.
+     ============================================================ -->
+<link rel="canonical" href="https://GITHUB_USERNAME.github.io/">
+<meta property="og:title" content="Arthur Fournier — Robotics &amp; computer vision">
+<meta property="og:description" content="Event-based vision and 3D perception for mobile robots.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://GITHUB_USERNAME.github.io/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="namebox">
+    <!-- Plain text is what everyone sees without JS. The canvas replaces it
+         when the script runs, and carries aria-hidden so it is never read twice. -->
+    <h1 class="name" id="name-text">Arthur Fournier</h1>
+    <canvas id="name-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <p class="lede">
+    I am an engineering student at <strong>École polytechnique</strong>, now in my final
+    year at <strong>Mines Paris</strong> on the robotics track. I work on perception for
+    mobile robots — mostly event-based vision, 3D reconstruction, and the learning methods
+    that sit on top of them. I am looking for a 2027 internship in robotics or
+    high-performance computing, anywhere in the world.
+  </p>
+
+  <nav class="links" aria-label="Profiles and contact">
+    <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>
+    <a href="https://github.com/GITHUB_USERNAME">GitHub</a>
+    <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-SLUG/">LinkedIn</a>
+    <a href="assets/docs/cv.pdf">CV (PDF)</a>
+    <!-- Keep a second, research-weighted CV here if you want one:
+    <a href="assets/docs/cv-research.pdf">CV — research</a> -->
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="section" aria-labelledby="h-now">
+  <h2 class="section-title" id="h-now">Recent</h2>
+  <ol class="news">
+    <li>
+      <span class="when"><time datetime="2026-09">Sep 2026</time></span>
+      <span class="what">Started my final year at Mines Paris, specialising in robotics.</span>
+    </li>
+    <li>
+      <span class="when"><time datetime="2026-07">Jul 2026</time></span>
+      <span class="what">Finished five months at <a href="https://ipal.cnrs.fr/">IPAL</a>,
+      the CNRS–NUS joint laboratory in Singapore, on event-based 3D perception.</span>
+    </li>
+    <li>
+      <span class="when"><time datetime="2026-03">Mar 2026</time></span>
+      <span class="what">Joined IPAL as a research intern, hosted at the National
+      University of Singapore.</span>
+    </li>
+    <li>
+      <span class="when"><time datetime="2025-09">Sep 2025</time></span>
+      <span class="what">Wrapped up a summer building LLM-based recommendation tooling
+      at Headmind Partners AI in Paris.</span>
+    </li>
+  </ol>
+</section>
+
+<section class="section" aria-labelledby="h-work">
+  <h2 class="section-title" id="h-work">Selected work</h2>
+
+  <!-- ============================================================
+       IPAL — WRITTEN DELIBERATELY WITHOUT RESULTS OR FIGURES.
+       Ask your supervisor what you may publish before adding any
+       metric, dataset name, video or code link to this entry.
+       A short results GIF is often fine; the code usually is not.
+       ============================================================ -->
+  <article class="project">
+    <div class="meta">
+      <time datetime="2026-03">Mar</time>–<time datetime="2026-07">Jul 2026</time>
+      <span class="place">IPAL, CNRS–NUS, Singapore</span>
+    </div>
+    <div class="body">
+      <h3>3D mapping from a single event camera, with moving objects</h3>
+      <p>
+        Event cameras report per-pixel brightness changes asynchronously instead of frames,
+        which makes them fast and robust to motion blur — and awkward for reconstruction
+        methods that assume a static scene. I worked on handling dynamic objects so that the
+        recovered geometry stays faithful when people and obstacles move through the field
+        of view. The target application is a drone carrying one event camera, assisting a
+        person with reduced mobility.
+      </p>
+      <p class="stack">Event-based vision, 3D reconstruction, Python, PyTorch</p>
+      <!-- When cleared, drop a short loop in assets/img/ and uncomment:
+      <figure class="shot">
+        <img src="assets/img/ipal-reconstruction.gif" alt="Reconstructed 3D scene with a moving pedestrian segmented out" loading="lazy">
+        <figcaption>Reconstruction with a moving pedestrian handled separately.</figcaption>
+      </figure> -->
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="meta">
+      <time datetime="2025-11">Nov</time>–<time datetime="2025-12">Dec 2025</time>
+      <span class="place">Data challenge, École polytechnique</span>
+    </div>
+    <div class="body">
+      <h3>Telling influencers from observers on social media</h3>
+      <p>
+        Binary classification of user roles from tweet content. I ran the exploratory
+        analysis on feature distributions and class imbalance, then compared transformer
+        encoders (BERT, CamemBERT, BERTweet) against classical classifiers and smaller
+        neural baselines. The best model reached 85% accuracy on the Kaggle leaderboard.
+      </p>
+      <p class="stack">PyTorch, Hugging Face, scikit-learn</p>
+      <p class="proj-links"><a href="https://github.com/GITHUB_USERNAME/REPO-NAME">Code</a></p>
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="meta">
+      <time datetime="2024-09">Sep 2024</time>–<time datetime="2025-05">May 2025</time>
+      <span class="place">Collective scientific project</span>
+    </div>
+    <div class="body">
+      <h3>Easing peak-hour congestion in paramedic call centres</h3>
+      <p>
+        A year-long project with a paramedics research department. We built a
+        retrieval-augmented prototype to help operators during surges, and evaluated how it
+        could realistically sit inside an existing dispatch workflow rather than beside it.
+      </p>
+      <p class="stack">RAG, LLM evaluation, Python</p>
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="meta">
+      <time datetime="2025-04">Apr</time>–<time datetime="2025-06">Jun 2025</time>
+      <span class="place">Pair project, École polytechnique</span>
+    </div>
+    <div class="body">
+      <h3>Mapping collaboration in the French music industry</h3>
+      <p>
+        Scraped and cleaned web data on French artists, stored it in MongoDB, embedded
+        artist profiles, and drew the collaboration network as a graph to see how scenes
+        cluster and who bridges them.
+      </p>
+      <p class="stack">Python, MongoDB, embeddings, network analysis</p>
+      <p class="proj-links"><a href="https://github.com/GITHUB_USERNAME/REPO-NAME">Code</a></p>
+    </div>
+  </article>
+</section>
+
+<section class="section" aria-labelledby="h-bg">
+  <h2 class="section-title" id="h-bg">Background</h2>
+
+  <h3 class="sub">Education</h3>
+  <ul class="entries">
+    <li>
+      <span class="when">2026–2027</span>
+      <span class="what"><strong>Mines Paris</strong> — final engineering year, robotics
+      track, with core coursework in AI and autonomous agents.</span>
+    </li>
+    <li>
+      <span class="when">2023–2026</span>
+      <span class="what"><strong>École polytechnique</strong> — MSc in engineering.
+      Machine learning, deep learning, computer vision, statistics, operating systems and
+      parallel algorithms.</span>
+    </li>
+    <li>
+      <span class="when">2021–2023</span>
+      <span class="what"><strong>Lycée Hoche, Versailles</strong> — MPI preparatory classes
+      in mathematics, physics and computer science.</span>
+    </li>
+  </ul>
+
+  <h3 class="sub">Experience</h3>
+  <ul class="entries">
+    <li>
+      <span class="when">2026</span>
+      <span class="what"><strong>Research intern, IPAL (CNRS–NUS)</strong>, Singapore —
+      event-based perception for assistive robots.</span>
+    </li>
+    <li>
+      <span class="when">2025</span>
+      <span class="what"><strong>AI consulting intern, Headmind Partners AI</strong>, Paris —
+      built and deployed an HR recommendation system on LLMs and embedding models, with a
+      Streamlit interface, unit tests and a Git workflow.</span>
+    </li>
+    <li>
+      <span class="when">2023–2024</span>
+      <span class="what"><strong>Officer cadet, French Gendarmerie</strong>, Toulouse —
+      seven months of military training, patrol duties and support to the company
+      commander on operations and judicial cases.</span>
+    </li>
+  </ul>
+</section>
+
+<section class="section" aria-labelledby="h-skills">
+  <h2 class="section-title" id="h-skills">Tools and languages</h2>
+  <dl class="skills">
+    <dt>Programming</dt>
+    <dd>Python, C, Java, SQL, OCaml</dd>
+    <dt>Machine learning</dt>
+    <dd>PyTorch, scikit-learn, pandas, Hugging Face</dd>
+    <dt>Spoken</dt>
+    <dd>French (native), English (C1), Spanish (B2)</dd>
+  </dl>
+  <p class="aside">
+    Away from a screen: university basketball, a decade of BMX racing, and piano, guitar
+    and audio production.
+  </p>
+</section>
+
+<section class="section" aria-labelledby="h-contact">
+  <h2 class="section-title" id="h-contact">Get in touch</h2>
+  <p class="contact">
+    The fastest way to reach me is
+    <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>.
+    I answer everything.
+  </p>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p>Built by hand and hosted on GitHub Pages. Last updated September 2026.</p>
+</footer>
+
+<script src="assets/js/events.js" defer></script>
+</body>
+</html>
