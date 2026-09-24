@@ -50,27 +50,36 @@ production more closely.
 index.html            the whole site, one page
 404.html              not-found page
 assets/css/style.css  all styling
-assets/js/events.js   the animated name in the header
+assets/js/events.js   the event-camera animation in the header
+assets/js/nav.js      highlights the current section in the floating nav
 assets/docs/          CV lives here
-assets/img/           project images live here
+assets/img/           portrait, IPAL figure, project media (keep each under ~1 MB)
 .nojekyll             tells Pages to serve files as-is, no Jekyll build
 ```
 
 ### The header animation
 
-`events.js` samples the rendered name into a grid of points, scatters them, and
-lets them converge — the way an event camera accumulates brightness changes into
-an edge. Positive and negative polarity are the blue and red dots.
+The header is a small simulated event camera. `events.js` moves a few bright
+discs across a dark canvas; wherever an edge moves, it fires events — positive
+(blue) on the leading edge, negative (red) on the trailing one. The visitor's
+cursor is one more moving edge. It pauses when the header is off screen or the
+tab is hidden.
 
-It is progressive enhancement: the plain `<h1>` is what the page ships with, and
-the canvas only takes over once the script runs successfully. No JavaScript, an
-old browser, or a thrown error all leave readable text behind. It also respects
-`prefers-reduced-motion`, drawing the settled state with no animation.
+It is decoration only: the name is a plain `<h1>`, so no JavaScript, an old
+browser or a thrown error leave a dark band with the name on it. It respects
+`prefers-reduced-motion` by drawing one frozen frame.
 
 ### Colours
 
 Defined once as custom properties at the top of `style.css`, with a dark-mode
-block right underneath. Change them in those two places and the whole page follows.
+block right underneath. Everything derives from event polarity: `--pos` (blue),
+`--neg` (red), and the five `--g1`…`--g5` steps between them used on the
+hairlines, buttons and panels. The header and footer use the dark `--ev-*` palette; inside `.hero` the page
+tokens are remapped to it, so the same buttons and portrait work on both. The
+name's gradient is written directly on `.name`, since it always sits on the
+dark header.
+
+Fonts: Silkscreen (the pixel name), Geist (text), Geist Mono (labels, dates).
 
 ## Before publishing work from a lab
 

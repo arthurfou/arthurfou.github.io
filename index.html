@@ -3,242 +3,615 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arthur Fournier — Robotics &amp; computer vision</title>
-<meta name="description" content="Engineering student at École polytechnique and Mines Paris, working on event-based vision and 3D perception for mobile robots.">
+<title>Arthur Fournier · AI, robotics &amp; computer vision</title>
+<meta name="description" content="Engineering student at École polytechnique and Mines Paris PSL, trained in AI, machine learning and deep learning, specialising in robotics.">
 
-<!-- ============================================================
-     TODO before going live: replace GITHUB_USERNAME everywhere,
-     and set the two URLs below to your real page address.
-     ============================================================ -->
 <link rel="canonical" href="https://arthurfou.github.io/">
-<meta property="og:title" content="Arthur Fournier — Robotics &amp; computer vision">
+<meta property="og:title" content="Arthur Fournier · AI, robotics &amp; computer vision">
 <meta property="og:description" content="Event-based vision and 3D perception for mobile robots.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arthurfou.github.io/">
+<meta name="theme-color" content="#0c1426">
+<meta name="color-scheme" content="light">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<!-- The few emoji on the page (flags, hobbies) come from Noto Color Emoji,
+     subset to just those glyphs: Windows has no colour flags otherwise. -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&amp;display=swap&amp;text=%F0%9F%87%AB%F0%9F%87%B7%F0%9F%87%AC%F0%9F%87%A7%F0%9F%87%AA%F0%9F%87%B8%F0%9F%9A%B2%F0%9F%8F%80%F0%9F%8E%B9" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="masthead">
-  <div class="namebox">
-    <!-- Plain text is what everyone sees without JS. The canvas replaces it
-         when the script runs, and carries aria-hidden so it is never read twice. -->
-    <h1 class="name" id="name-text">Arthur Fournier</h1>
-    <canvas id="name-canvas" aria-hidden="true"></canvas>
+<!-- The header is a small event camera: moving edges (and the visitor's
+     cursor) emit positive and negative events. The canvas is decoration
+     only; everything on top of it is real text and works without JS. -->
+<header class="hero" id="hero">
+  <canvas id="events" aria-hidden="true"></canvas>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hud" aria-hidden="true">
+    <span>event stream · live</span>
+    <span class="hint">move your cursor → <b>+1</b> / <i>−1</i></span>
   </div>
 
-  <p class="lede">
-    I am an engineering student at <strong>École polytechnique</strong>, now in my final
-    year at <strong>Mines Paris</strong> on the robotics track. I work on perception for
-    mobile robots — mostly event-based vision, 3D reconstruction, and the learning methods
-    that sit on top of them. I am looking for a 2027 internship in robotics or
-    high-performance computing, anywhere in the world.
-  </p>
+  <div class="hero-body" id="about">
+    <div class="about">
+      <h1 class="name">Arthur Fournier</h1>
+      <p class="prompt" aria-hidden="true">$ whoami <em>--verbose</em></p>
+      <p class="lede">
+        I am an engineering student at <strong class="breathe">École polytechnique</strong>, now in my final
+        year at <strong class="breathe">Mines Paris PSL</strong> on the robotics track. I have a broad
+        training in AI, machine learning and deep learning, and I specialise in robotics:
+        perception, computer vision and reinforcement learning. I am looking for a <span class="breathe">2027 internship in AI or robotics</span>, in France or abroad.<span class="caret" aria-hidden="true"></span>
+      </p>
+      <nav class="links" aria-label="Profiles and contact">
+        <a href="assets/docs/cv.pdf">cv.pdf</a>
+        <a href="https://github.com/arthurfou">github</a>
+        <a href="https://www.linkedin.com/in/arthurfou/">linkedin</a>
+        <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>
+        <!-- Keep a second, research-weighted CV here if you want one:
+        <a href="assets/docs/cv-research.pdf">cv-research.pdf</a> -->
+      </nav>
+      <p class="now"><span>now</span> final year at Mines Paris PSL · building <a href="#p-mppi">edge-mppi</a></p>
+    </div>
 
-  <nav class="links" aria-label="Profiles and contact">
-    <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>
-    <a href="https://github.com/arthurfou">GitHub</a>
-    <a href="https://www.linkedin.com/in/arthurfou/">LinkedIn</a>
-    <a href="assets/docs/cv.pdf">CV (PDF)</a>
-    <!-- Keep a second, research-weighted CV here if you want one:
-    <a href="assets/docs/cv-research.pdf">CV — research</a> -->
-  </nav>
+    <!-- Drop a square-ish photo at assets/img/portrait.jpg (600×600 is plenty).
+         Until it exists, the frame shows an empty placeholder. -->
+    <figure class="portrait">
+      <div class="frame">
+        <img src="assets/img/portrait.jpg" alt="Portrait of Arthur Fournier" width="600" height="600"
+             onerror="this.parentNode.classList.add('empty'); this.remove();">
+      </div>
+    </figure>
+  </div>
 </header>
+<div class="edge" aria-hidden="true"></div>
+
+<!-- Floating section nav: sticks to the top once the header has scrolled
+     away. nav.js highlights the section in view. -->
+<nav class="pill-nav" aria-label="Sections">
+  <a href="#h-work">selected work</a>
+  <a href="#other">other projects</a>
+  <a href="#h-bg">background</a>
+  <a href="#h-skills">tools</a>
+  <a href="#h-out">outside the lab</a>
+</nav>
 
 <main id="main">
 
-<section class="section" aria-labelledby="h-now">
-  <h2 class="section-title" id="h-now">Recent</h2>
-  <ol class="news">
-    <li>
-      <span class="when"><time datetime="2026-09">Sep 2026</time></span>
-      <span class="what">Started my final year at Mines Paris, specialising in robotics.</span>
-    </li>
-    <li>
-      <span class="when"><time datetime="2026-07">Jul 2026</time></span>
-      <span class="what">Finished five months at <a href="https://ipal.cnrs.fr/">IPAL</a>,
-      the CNRS–NUS joint laboratory in Singapore, on event-based 3D perception.</span>
-    </li>
-    <li>
-      <span class="when"><time datetime="2026-03">Mar 2026</time></span>
-      <span class="what">Joined IPAL as a research intern, hosted at the National
-      University of Singapore.</span>
-    </li>
-    <li>
-      <span class="when"><time datetime="2025-09">Sep 2025</time></span>
-      <span class="what">Wrapped up a summer building LLM-based recommendation tooling
-      at Headmind Partners AI in Paris.</span>
-    </li>
-  </ol>
-</section>
-
 <section class="section" aria-labelledby="h-work">
-  <h2 class="section-title" id="h-work">Selected work</h2>
+  <h2 class="section-title" id="h-work">selected work</h2>
 
-  <!-- ============================================================
-       IPAL — WRITTEN DELIBERATELY WITHOUT RESULTS OR FIGURES.
-       Ask your supervisor what you may publish before adding any
-       metric, dataset name, video or code link to this entry.
-       A short results GIF is often fine; the code usually is not.
-       ============================================================ -->
-  <article class="project">
-    <div class="meta">
-      <time datetime="2026-03">Mar</time>–<time datetime="2026-07">Jul 2026</time>
-      <span class="place">IPAL, CNRS–NUS, Singapore</span>
-    </div>
-    <div class="body">
-      <h3>3D mapping from a single event camera, with moving objects</h3>
+  <div class="cards">
+
+  <article class="card featured" id="p-ipal">
+    <header>
+      <span>research internship <span class="tag">main project</span></span>
+      <span><time datetime="2026-03">mar</time> → <time datetime="2026-07">jul 2026</time></span>
+    </header>
+    <div class="in">
+      <h3>Motion-aware odometry from a single event camera</h3>
       <p>
-        Event cameras report per-pixel brightness changes asynchronously instead of frames,
-        which makes them fast and robust to motion blur — and awkward for reconstruction
-        methods that assume a static scene. I worked on handling dynamic objects so that the
-        recovered geometry stays faithful when people and obstacles move through the field
-        of view. The target application is a drone carrying one event camera, assisting a
-        person with reduced mobility.
+        A robot guiding a blind person through a station has to know where it is from its
+        own sensors, here a single event camera. The best learned event-only odometry,
+        DEVO, assumes the world is static, and the people walking in front of the robot
+        break that assumption exactly where it matters. I taught it to notice what moves on
+        its own, and to stop trusting it: trained jointly with the odometry, the module cuts
+        the trajectory error by <strong class="hl-pos">41%</strong> on EVIMO2, and still by
+        <strong class="hl-neg">37%</strong> without a single segmentation label.
       </p>
-      <p class="stack">Event-based vision, 3D reconstruction, Python, PyTorch</p>
-      <!-- When cleared, drop a short loop in assets/img/ and uncomment:
+
       <figure class="shot">
-        <img src="assets/img/ipal-reconstruction.gif" alt="Reconstructed 3D scene with a moving pedestrian segmented out" loading="lazy">
-        <figcaption>Reconstruction with a moving pedestrian handled separately.</figcaption>
-      </figure> -->
+        <img src="assets/img/ipal-mask.png" width="1050" height="260" loading="lazy"
+             alt="Three views of the same event frame: raw events in blue and red, the ground-truth moving object in yellow, and the mask predicted by the module in yellow.">
+        <figcaption>events · ground truth · prediction. An object moving on its own, seen by
+        the event camera (blue and red are the two polarities), and the dynamic mask our
+        module predicts.</figcaption>
+      </figure>
+
+      <details class="more">
+        <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+        <p>
+          The idea comes from DynaSLAM: detect what moves independently, and stop trusting
+          it. Rather than cleaning the event stream with a dense mask upstream of the
+          odometry, as the closest prior work does, I used two places DEVO already exposes:
+          the score map that picks which patches to track, and the per-edge confidence of
+          its differentiable bundle adjustment.
+        </p>
+        <p>
+          A small causal ConvLSTM (1.0 M parameters) predicts a soft "dynamic" weight that
+          is multiplied into both. Nothing is deleted, so the sparse patch structure DEVO
+          relies on survives, and the whole chain stays differentiable. That means the
+          segmentation module can be trained jointly with the odometry, so the mask learns
+          what hurts the pose rather than what looks like an object, and it can even be
+          supervised by the bundle adjustment's own rigid-motion residual, without any
+          label.
+        </p>
+        <p>
+          For scale, a perfect ground-truth mask gives 45% on EVIMO2: the jointly trained
+          module closes nine tenths of that gap, against 27% for the same module trained on
+          its own. Five configurations were compared on EVIMO1, EVIMO2 and, without retraining, on
+          four external datasets (MVSEC, EDS, TUM-VIE, VECtor), where the modules improve
+          the base system in 15 of 20 evaluations. Three results are negative and reported as such. On EVIMO1, run-to-run noise is as large as every effect measured. Scaling up the segmentation module helps neither segmentation nor odometry, and its initialisation has no systematic effect.
+        </p>
+        <p>I am now turning the work into a paper and a clean public codebase.</p>
+      </details>
     </div>
+    <dl class="kv">
+      <dt>where</dt><dd>NUS, IPAL (CNRS), Singapore</dd>
+      <dt>stack</dt><dd>pytorch · convlstm · differentiable bundle adjustment · wandb · slurm</dd>
+    </dl>
+    <nav class="links card-links" aria-label="IPAL project links">
+      <a href="https://github.com/arthurfou/MADEVO">code ↗</a>
+    </nav>
   </article>
 
-  <article class="project">
-    <div class="meta">
-      <time datetime="2025-11">Nov</time>–<time datetime="2025-12">Dec 2025</time>
-      <span class="place">Data challenge, École polytechnique</span>
+  <article class="card" id="p-makeitalive">
+    <header>
+      <span>generative ai</span>
+      <span><time datetime="2026-02">feb</time> → <time datetime="2026-03">mar 2026</time></span>
+    </header>
+    <div class="in split">
+      <div class="split-text">
+        <h3>Makeitalive: animating a single landscape photo</h3>
+        <p>
+          We fine-tuned Stable Video Diffusion on 2,374 drone clips so that one still photo
+          turns into a short video with drone-like camera motion, where foreground and
+          background move at different speeds.
+        </p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            A self-supervised U-Net that predicts an optical flow field and warps the pixels
+            is fast, but cannot invent what was hidden. LoRA adapters on SVD's temporal
+            attention (about 3.3 M trained parameters) only learned a slight parallax. Full
+            fine-tuning of the temporal layers with SVD_Xtend (5,000 steps, about 12 hours on
+            an A100) gave the cinematic motion shown here.
+          </p>
+        </details>
+      </div>
+      <figure class="media">
+        <video src="assets/img/makeitalive-square.mp4" poster="assets/img/makeitalive-square.jpg"
+               autoplay muted loop playsinline width="400" height="400"
+               aria-label="A single mountain photo animated by the fine-tuned model, with drone-like parallax"></video>
+        <figcaption>one photo in, motion out</figcaption>
+      </figure>
     </div>
-    <div class="body">
-      <h3>Telling influencers from observers on social media</h3>
-      <p>
-        Binary classification of user roles from tweet content. I ran the exploratory
-        analysis on feature distributions and class imbalance, then compared transformer
-        encoders (BERT, CamemBERT, BERTweet) against classical classifiers and smaller
-        neural baselines. The best model reached 85% accuracy on the Kaggle leaderboard.
-      </p>
-      <p class="stack">PyTorch, Hugging Face, scikit-learn</p>
-      <p class="proj-links"><a href="https://github.com/arthurfou/">Code</a></p>
-    </div>
+    <dl class="kv">
+      <dt>course</dt><dd>École polytechnique, Generative AI</dd>
+      <dt>team</dt><dd>with Mathurin Petit</dd>
+      <dt>stack</dt><dd>pytorch · diffusers · peft · stable video diffusion</dd>
+    </dl>
+    <nav class="links card-links" aria-label="Makeitalive links">
+      <a href="https://github.com/matu1003/Makeitalive">code ↗</a>
+      <a href="https://github.com/matu1003/Makeitalive/blob/main/docs/report.pdf">report ↗</a>
+    </nav>
   </article>
 
-  <article class="project">
-    <div class="meta">
-      <time datetime="2024-09">Sep 2024</time>–<time datetime="2025-05">May 2025</time>
-      <span class="place">Collective scientific project</span>
+  <article class="card" id="p-rl">
+    <header>
+      <span>reinforcement learning</span>
+      <span><time datetime="2026-02">feb</time> → <time datetime="2026-03">mar 2026</time></span>
+    </header>
+    <div class="in split">
+      <div class="split-text">
+        <h3>Learning to play Block Blast</h3>
+        <p>
+          Reinforcement learning on an 8×8 puzzle game. DQN and Rainbow struggled, so we
+          learned the value of the board after each move instead: a 42k-parameter network,
+          63 times smaller, that survives over 200 moves on average where a greedy player
+          dies around move 44.
+        </p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            A Q-network has to learn at once what each piece looks like, where it fits and
+            what the board is worth. Since the game can list every valid placement, our Deep
+            Value Network only scores the resulting boards ("afterstates") and picks the best
+            one. Its eight parallel convolution branches include full-row and full-column
+            detectors, which spot nearly complete lines.
+          </p>
+          <p>
+            In the three-piece version, the network ranks every order and placement of the
+            three pieces with a short lookahead. The greedy player grabs immediate line
+            clears, fragments the board and dies around move 44. With the same two-piece
+            lookahead, the value network keeps space open and lasts about 209 moves, over 250
+            games.
+          </p>
+        </details>
+      </div>
+      <!-- Placeholder board until the gameplay GIF exists. To swap it in, replace
+           the <svg> below with:
+           <img src="assets/img/blockblast.gif" width="400" height="400" loading="lazy"
+                alt="The value network playing Block Blast"> -->
+      <figure class="media">
+        <svg viewBox="0 0 80 80" role="img" aria-label="An 8 by 8 Block Blast board mid-game">
+          <rect x="1" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="11" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="21" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="31" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="41" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="51" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="61" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="71" y="1" width="8" height="8" class="bb-empty"/>
+          <rect x="1" y="11" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="11" y="11" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="21" y="11" width="8" height="8" class="bb-empty"/>
+          <rect x="31" y="11" width="8" height="8" class="bb-empty"/>
+          <rect x="41" y="11" width="8" height="8" class="bb-empty"/>
+          <rect x="51" y="11" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="61" y="11" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="71" y="11" width="8" height="8" class="bb-empty"/>
+          <rect x="1" y="21" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="11" y="21" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="21" y="21" width="8" height="8" class="bb-empty"/>
+          <rect x="31" y="21" width="8" height="8" class="bb-empty"/>
+          <rect x="41" y="21" width="8" height="8" class="bb-empty"/>
+          <rect x="51" y="21" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="61" y="21" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="71" y="21" width="8" height="8" class="bb-empty"/>
+          <rect x="1" y="31" width="8" height="8" class="bb-empty"/>
+          <rect x="11" y="31" width="8" height="8" class="bb-empty"/>
+          <rect x="21" y="31" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="31" y="31" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="41" y="31" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="51" y="31" width="8" height="8" class="bb-empty"/>
+          <rect x="61" y="31" width="8" height="8" class="bb-empty"/>
+          <rect x="71" y="31" width="8" height="8" class="bb-empty"/>
+          <rect x="1" y="41" width="8" height="8" style="fill:var(--g2)"/>
+          <rect x="11" y="41" width="8" height="8" style="fill:var(--g2)"/>
+          <rect x="21" y="41" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="31" y="41" width="8" height="8" class="bb-empty"/>
+          <rect x="41" y="41" width="8" height="8" class="bb-empty"/>
+          <rect x="51" y="41" width="8" height="8" class="bb-empty"/>
+          <rect x="61" y="41" width="8" height="8" style="fill:var(--g3)"/>
+          <rect x="71" y="41" width="8" height="8" style="fill:var(--g3)"/>
+          <rect x="1" y="51" width="8" height="8" style="fill:var(--g2)"/>
+          <rect x="11" y="51" width="8" height="8" style="fill:var(--g2)"/>
+          <rect x="21" y="51" width="8" height="8" style="fill:var(--g1)"/>
+          <rect x="31" y="51" width="8" height="8" class="bb-empty"/>
+          <rect x="41" y="51" width="8" height="8" class="bb-empty"/>
+          <rect x="51" y="51" width="8" height="8" class="bb-empty"/>
+          <rect x="61" y="51" width="8" height="8" style="fill:var(--g3)"/>
+          <rect x="71" y="51" width="8" height="8" style="fill:var(--g3)"/>
+          <rect x="1" y="61" width="8" height="8" class="bb-empty"/>
+          <rect x="11" y="61" width="8" height="8" class="bb-empty"/>
+          <rect x="21" y="61" width="8" height="8" style="fill:var(--g4)"/>
+          <rect x="31" y="61" width="8" height="8" style="fill:var(--g4)"/>
+          <rect x="41" y="61" width="8" height="8" style="fill:var(--g4)"/>
+          <rect x="51" y="61" width="8" height="8" style="fill:var(--g4)"/>
+          <rect x="61" y="61" width="8" height="8" class="bb-empty"/>
+          <rect x="71" y="61" width="8" height="8" style="fill:var(--g3)"/>
+          <rect x="1" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="11" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="21" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="31" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="41" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="51" y="71" width="8" height="8" style="fill:var(--g5)"/>
+          <rect x="61" y="71" width="8" height="8" class="bb-empty"/>
+          <rect x="71" y="71" width="8" height="8" style="fill:var(--g3)"/>
+        </svg>
+        <figcaption>the 8×8 board</figcaption>
+      </figure>
     </div>
-    <div class="body">
-      <h3>Easing peak-hour congestion in paramedic call centres</h3>
-      <p>
-        A year-long project with a paramedics research department. We built a
-        retrieval-augmented prototype to help operators during surges, and evaluated how it
-        could realistically sit inside an existing dispatch workflow rather than beside it.
-      </p>
-      <p class="stack">RAG, LLM evaluation, Python</p>
-    </div>
+    <dl class="kv">
+      <dt>course</dt><dd>École polytechnique, Reinforcement Learning</dd>
+      <dt>team</dt><dd>with Nathan Duboisset, Keyvan Attarian, Roman Lendormy</dd>
+      <dt>stack</dt><dd>pytorch · gymnasium · wandb</dd>
+    </dl>
+    <nav class="links card-links" aria-label="Block Blast links">
+      <a href="https://github.com/NathanDuboisset/RL_project/blob/main/report.pdf">report ↗</a>
+      <a href="https://github.com/NathanDuboisset/RL_project">code ↗</a>
+    </nav>
   </article>
 
-  <article class="project">
-    <div class="meta">
-      <time datetime="2025-04">Apr</time>–<time datetime="2025-06">Jun 2025</time>
-      <span class="place">Pair project, École polytechnique</span>
-    </div>
-    <div class="body">
-      <h3>Mapping collaboration in the French music industry</h3>
-      <p>
-        Scraped and cleaned web data on French artists, stored it in MongoDB, embedded
-        artist profiles, and drew the collaboration network as a graph to see how scenes
-        cluster and who bridges them.
-      </p>
-      <p class="stack">Python, MongoDB, embeddings, network analysis</p>
-      <p class="proj-links"><a href="https://github.com/arthurfou/Modal_Project">Code</a></p>
-    </div>
-  </article>
+  </div>
+
+  <h3 class="sub" id="other">other projects</h3>
+  <ul class="rows">
+    <li id="p-mppi">
+      <div class="row-meta">
+        <p><time datetime="2026-09">sep 2026</time> → now <span class="tag live">in progress</span></p>
+        <p class="row-stack">cuda · c++ · python</p>
+      </div>
+      <div class="row-body">
+        <h4>edge-mppi: real-time model predictive control on a Jetson</h4>
+        <p>MPPI control with a hand-written CUDA kernel: 8,192 trajectories in under 20 ms on a Jetson.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            At every control step, MPPI rolls thousands of noisy control sequences through the
+            vehicle dynamics, scores them and averages them by <code>exp(−cost/λ)</code>. The
+            rollouts are independent of each other but strictly sequential in time, a
+            pattern that maps badly onto cuBLAS or PyTorch. A fused kernel keeps the whole
+            vehicle state in registers for the full horizon and never writes a trajectory to
+            memory.
+          </p>
+          <p>
+            The roadmap: a NumPy reference, a dynamic bicycle model with tyres, a naive CUDA
+            port checked against NumPy on fixed noise, Nsight-driven optimisation, then
+            hardware-in-the-loop on the Jetson and a comparison against
+            <code>nav2_mppi_controller</code>. Only the foundations exist today.
+          </p>
+        </details>
+      </div>
+      <p class="row-links"><a href="https://github.com/arthurfou/edge-mppi">code ↗</a></p>
+    </li>
+    <!-- HIDDEN until the X-Forum website can be shown publicly.
+         To show it again, delete this comment's first and last lines.
+    <li id="p-xforum">
+      <div class="row-meta">
+        <p><time datetime="2026-04">apr 2026</time> → now <span class="tag live">live</span></p>
+        <p class="row-stack">react · typescript · django · docker · git · ci/cd</p>
+      </div>
+      <div class="row-body">
+        <h4>The X-Forum website</h4>
+        <p>Site and company portal for École polytechnique's careers fair, built with another student.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            Companies create an account with an emailed one-time code, then order their stand
+            through a nine-step wizard (surface, structure, furniture, electricity, screens,
+            advertising…). Each order automatically produces its purchase order, which the
+            company signs online through a DocuSign integration. On the other side, the forum
+            team follows each company through a sales pipeline, assigns who handles it, shares
+            files, edits the first-contact email template and exports completed orders to
+            Excel. The site is bilingual, French and English.
+          </p>
+          <p>The code belongs to the student association and stays private.</p>
+        </details>
+      </div>
+      <p class="row-links"><a href="https://xforum.binets.fr/">site ↗</a></p>
+    </li>
+    END HIDDEN X-Forum website -->
+    <li id="p-twitter">
+      <div class="row-meta">
+        <p><time datetime="2025-11">nov</time> → <time datetime="2025-12">dec 2025</time></p>
+        <p class="row-stack">pytorch · scikit-learn · xgboost · camembert</p>
+      </div>
+      <div class="row-body">
+        <h4>Telling influencers from observers on social media</h4>
+        <p>Three models voting together (TF-IDF on the tweets, CamemBERT embeddings, and the account metadata), trained on a split by user to avoid leakage, for 84.9% accuracy on the Kaggle leaderboard.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            A three-headed ensemble: TF-IDF features into XGBoost, CamemBERT embeddings into a
+            second XGBoost, and a head on profile metadata alone. Splitting train and
+            validation by user rather than by tweet removed a leak and brought local scores in
+            line with the leaderboard.
+          </p>
+          <p>With Octave Rebourseau and Aziz Berthé, for the Deep Learning course.</p>
+        </details>
+      </div>
+      <p class="row-links"><a href="https://github.com/Octave-rbs/twitter-user-classification">code ↗</a></p>
+    </li>
+    <li id="p-headmind">
+      <div class="row-meta">
+        <p><time datetime="2025-06">jun</time> → <time datetime="2025-09">sep 2025</time></p>
+        <p class="row-stack">agents · llm · embeddings · streamlit</p>
+      </div>
+      <div class="row-body">
+        <h4>Agents for HR recommendation at Headmind Partners AI</h4>
+        <p>An agentic system for HR built on LLMs and embedding models, designed and deployed during my internship at a company that builds and ships AI products.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            The agents run a full pipeline on each application: they review the CV, write a
+            summary of the candidate, then rank candidates against the role. It shipped with a
+            Streamlit interface, unit tests and a Git workflow, and I presented it to the team.
+          </p>
+          <p>The code belongs to Headmind Partners AI and stays private.</p>
+        </details>
+      </div>
+      <p class="row-links"><span class="private">private code</span></p>
+    </li>
+    <li id="p-music">
+      <div class="row-meta">
+        <p><time datetime="2025-04">apr</time> → <time datetime="2025-06">jun 2025</time></p>
+        <p class="row-stack">web apis · mongodb · networkx · gephi</p>
+      </div>
+      <div class="row-body">
+        <h4>Who collaborates with whom in French rap</h4>
+        <p>Collaboration and similarity graphs of 477 French rap artists, split into communities with the Louvain algorithm and studied through degree distribution, clustering, and degree and betweenness centrality.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <figure class="shot">
+            <img src="assets/img/music-graph.jpg" width="1000" height="659" loading="lazy"
+                 alt="Collaboration graph of French rap artists, coloured by detected community">
+            <figcaption>The collaboration graph after Louvain community detection, one colour per community.</figcaption>
+          </figure>
+          <p>
+            The data lives in MongoDB. Lyrics are embedded with Word2Bezbar, a model trained
+            on French rap, and artists are linked when their lyrics are close. On each graph we
+            measured the degree distribution, clustering and centralities to find which artists
+            bridge otherwise separate scenes, then ran Louvain to extract the communities that
+            Gephi draws.
+          </p>
+          <p>With Arthur Buis, for the Web Graphs course.</p>
+        </details>
+      </div>
+      <p class="row-links"><a href="https://github.com/arthurfou/music-collab-graph">code ↗</a></p>
+    </li>
+    <li id="p-rag">
+      <div class="row-meta">
+        <p><time datetime="2024-09">sep 2024</time> → <time datetime="2025-05">may 2025</time></p>
+        <p class="row-stack">rag · faiss · llama</p>
+      </div>
+      <div class="row-body">
+        <h4>A retrieval assistant for emergency call handlers</h4>
+        <p>A chatbot that finds the right page of the medical regulation guide, tested in a SAMU call centre.</p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            We started with interviews of call handlers, emergency physicians and agency
+            staff, visits to two call centres with live call observation, and a national
+            questionnaire. The message was clear: the tool had to help the operator during the
+            call, never answer callers or make decisions on its own.
+          </p>
+          <p>
+            The guide has about 190 pages and a question rarely needs more than one, so the
+            pipeline routes before it retrieves: an LLM picks the page from the table of
+            contents, FAISS retrieves only within it, and the answer always links back to its
+            source. Everything runs on open-weight models (Llama 3.1 8B, bge-m3), because
+            health data cannot leave the hospital.
+          </p>
+        </details>
+      </div>
+      <p class="row-links"><a href="https://github.com/arthurfou/medical-regulation-rag">code ↗</a></p>
+    </li>
+  </ul>
 </section>
 
 <section class="section" aria-labelledby="h-bg">
-  <h2 class="section-title" id="h-bg">Background</h2>
+  <h2 class="section-title" id="h-bg">background</h2>
 
-  <h3 class="sub">Education</h3>
-  <ul class="entries">
+  <div class="bg-cols">
+  <div>
+  <h3 class="sub">education</h3>
+  <ul class="log wide">
     <li>
       <span class="when">2026–2027</span>
-      <span class="what"><strong>Mines Paris</strong> — final engineering year, robotics
-      track, with core coursework in AI and autonomous agents.</span>
+      <span class="what"><strong>Mines Paris PSL</strong>, final engineering year on the
+      robotics track, with core coursework in AI and autonomous agents.</span>
     </li>
     <li>
       <span class="when">2023–2026</span>
-      <span class="what"><strong>École polytechnique</strong> — MSc in engineering.
+      <span class="what"><strong>École polytechnique</strong>, MSc in engineering.
       Machine learning, deep learning, computer vision, statistics, operating systems and
       parallel algorithms.</span>
     </li>
     <li>
       <span class="when">2021–2023</span>
-      <span class="what"><strong>Lycée Hoche, Versailles</strong> — MPI preparatory classes
+      <span class="what"><strong>Lycée Hoche, Versailles</strong>, MPI preparatory classes
       in mathematics, physics and computer science.</span>
     </li>
   </ul>
 
-  <h3 class="sub">Experience</h3>
-  <ul class="entries">
+  </div>
+  <div>
+  <h3 class="sub">experience</h3>
+  <ul class="log wide">
     <li>
       <span class="when">2026</span>
-      <span class="what"><strong>Research intern, IPAL (CNRS–NUS)</strong>, Singapore —
-      event-based perception for assistive robots.</span>
+      <span class="what"><strong>Research intern, NUS &amp; IPAL (CNRS)</strong>, Singapore.
+      Event-based perception for assistive robots.
+      <a class="jump" href="#p-ipal">project ↑</a></span>
+    </li>
+    <li>
+      <span class="when">2024–2026</span>
+      <span class="what"><strong>X-Forum, logistics team</strong>, École polytechnique's
+      careers fair. I organised security and the build of the venue, and handled the
+      companies' requests during the event.<!-- HIDDEN with the X-Forum website row:
+      I also co-built the forum's website.
+      <a class="jump" href="#p-xforum">project ↑</a> --></span>
     </li>
     <li>
       <span class="when">2025</span>
-      <span class="what"><strong>AI consulting intern, Headmind Partners AI</strong>, Paris —
-      built and deployed an HR recommendation system on LLMs and embedding models, with a
-      Streamlit interface, unit tests and a Git workflow.</span>
+      <span class="what"><strong>AI intern, Headmind Partners AI</strong>, Paris.
+      An agentic system for HR on LLMs and embedding models.
+      <a class="jump" href="#p-headmind">project ↑</a></span>
+    </li>
+    <li>
+      <span class="when">2024–2025</span>
+      <span class="what"><strong>Model United Nations</strong>, English-speaking delegate at
+      GIMUN in Geneva and in simulated debates at École polytechnique.</span>
     </li>
     <li>
       <span class="when">2023–2024</span>
-      <span class="what"><strong>Officer cadet, French Gendarmerie</strong>, Toulouse —
-      seven months of military training, patrol duties and support to the company
+      <span class="what"><strong>Officer cadet, French Gendarmerie</strong>, Toulouse.
+      Seven months of military training, patrol duties and support to the company
       commander on operations and judicial cases.</span>
+    </li>
+  </ul>
+  </div>
+  </div>
+</section>
+
+<section class="section panel" aria-labelledby="h-skills">
+  <h2 class="section-title" id="h-skills">tools and languages</h2>
+  <dl class="kv skills">
+    <dt>programming</dt>
+    <dd>Python, C, C++, Java, SQL, OCaml, TypeScript, HTML/CSS</dd>
+    <dt>machine learning</dt>
+    <dd>PyTorch, Hugging Face (transformers, diffusers), scikit-learn, XGBoost, pandas, FAISS</dd>
+    <dt>systems &amp; web</dt>
+    <dd>CUDA, Git, CI/CD, Docker, Slurm, Weights &amp; Biases, React, Django, Streamlit</dd>
+    <dt>spoken</dt>
+    <dd><span class="flag" aria-hidden="true">🇫🇷</span> French (native), <span class="flag" aria-hidden="true">🇬🇧</span> English (C1), <span class="flag" aria-hidden="true">🇪🇸</span> Spanish (B2)</dd>
+  </dl>
+</section>
+
+<section class="section" aria-labelledby="h-out">
+  <h2 class="section-title" id="h-out">outside the lab</h2>
+  <ul class="hobbies">
+    <li>
+      <div>
+        <h3>BMX racing</h3>
+        <p>Ten years of racing, up to inter-regional level.</p>
+      </div>
+      <span class="emoji" aria-hidden="true">🚲</span>
+    </li>
+    <li>
+      <div>
+        <h3>Basketball</h3>
+        <p>On the École polytechnique team.</p>
+      </div>
+      <span class="emoji" aria-hidden="true">🏀</span>
+    </li>
+    <li>
+      <div>
+        <h3>Music</h3>
+        <p>Piano and guitar player. I compose my own tracks and mix them.</p>
+      </div>
+      <span class="emoji" aria-hidden="true">🎹</span>
     </li>
   </ul>
 </section>
 
-<section class="section" aria-labelledby="h-skills">
-  <h2 class="section-title" id="h-skills">Tools and languages</h2>
-  <dl class="skills">
-    <dt>Programming</dt>
-    <dd>Python, C, Java, SQL, OCaml</dd>
-    <dt>Machine learning</dt>
-    <dd>PyTorch, scikit-learn, pandas, Hugging Face</dd>
-    <dt>Spoken</dt>
-    <dd>French (native), English (C1), Spanish (B2)</dd>
-  </dl>
-  <p class="aside">
-    Away from a screen: university basketball, a decade of BMX racing, and piano, guitar
-    and audio production.
-  </p>
-</section>
-
-<section class="section" aria-labelledby="h-contact">
-  <h2 class="section-title" id="h-contact">Get in touch</h2>
-  <p class="contact">
-    The fastest way to reach me is
-    <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>.
-    I answer everything.
-  </p>
-</section>
-
 </main>
 
-<footer class="foot">
-  <p>Built by hand and hosted on GitHub Pages. Last updated September 2026.</p>
+<div class="edge" aria-hidden="true"></div>
+<footer class="site-foot" id="foot">
+  <canvas class="foot-events" aria-hidden="true"></canvas>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <p class="foot-name">Arthur Fournier</p>
+      <p>AI, machine learning and robotics: perception, vision, reinforcement learning.</p>
+    </div>
+    <nav aria-label="On this page">
+      <h2>on this page</h2>
+      <ul>
+        <li><a href="#about">about</a></li>
+        <li><a href="#h-work">selected work</a></li>
+        <li><a href="#other">other projects</a></li>
+        <li><a href="#h-bg">background</a></li>
+        <li><a href="#h-skills">tools and languages</a></li>
+        <li><a href="#h-out">outside the lab</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Elsewhere">
+      <h2>elsewhere</h2>
+      <ul>
+        <li><a href="https://github.com/arthurfou">github</a></li>
+        <li><a href="https://www.linkedin.com/in/arthurfou/">linkedin</a></li>
+        <li><a href="assets/docs/cv.pdf">cv.pdf</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>contact</h2>
+      <p><a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@<wbr>polytechnique.edu</a></p>
+    </div>
+  </div>
+  <div class="foot-base">
+    <p>© 2026 Arthur Fournier · built by hand, hosted on GitHub Pages · last updated Sep 2026</p>
+    <a href="#hero">back to top ↑</a>
+  </div>
 </footer>
 
 <script src="assets/js/events.js" defer></script>
+<script src="assets/js/nav.js" defer></script>
 </body>
 </html>
