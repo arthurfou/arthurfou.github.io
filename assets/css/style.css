@@ -90,9 +90,9 @@ main {
 
   position: relative;
   min-height: 21.25rem;
-  gap: 2rem;
+  gap: 4rem;
   /* inner edge lines up with the content rail below */
-  padding-block: 1.375rem 2.5rem;
+  padding-block: 1.375rem 5.5rem;
   padding-inline: max(var(--pad), calc((100% - var(--rail)) / 2 + var(--pad)));
   display: flex;
   flex-direction: column;
@@ -126,6 +126,7 @@ main {
    line of the bio and runs alongside it. */
 .hero-body .about { display: contents; }
 .hero-body .about > * { grid-column: 1; }
+.hero-body .about > .name { grid-column: 1 / -1; }
 .hero-body .portrait { grid-column: 2; grid-row: 3 / span 3; margin-top: .45rem; }
 .hero .name { margin-bottom: 1.5rem; }
 .hero .lede { text-shadow: 0 0 14px var(--ev-bg); }
@@ -169,11 +170,16 @@ main {
 }
 .hud b { font-weight: 400; color: var(--ev-pos); }
 .hud i { font-style: normal; color: var(--ev-neg); }
-@media (hover: none) { .hint { display: none; } }
+/* the only HUD line is the cursor hint: right-aligned, gone on touch screens */
+.hud { justify-content: flex-end; }
+@media (hover: none) { .hud { display: none; } }
 
 .name {
   margin: 0;
-  font: 700 clamp(2.25rem, 6vw, 4.5rem)/.92 var(--pixel);
+  /* one line, across the full width of the header (the photo starts
+     lower down); sized so it never overflows */
+  font: 700 clamp(1.5rem, 7vw, 3.5rem)/.92 var(--pixel);
+  white-space: nowrap;
   letter-spacing: -.01em;
   overflow-wrap: break-word;
   /* stays bright on the dark header whatever the page theme */
@@ -565,7 +571,19 @@ a:focus-visible {
 
 /* The main project: gradient header and the same hard shadow as the
    portrait. */
-.card.featured { box-shadow: 5px 5px 0 var(--g5); }
+/* Hard offset shadow painted with the header band's ramp, left to
+   right: the bottom edge runs blue to red, the right edge is all red. It
+   sits behind the card (z-index -1 on a card with no stacking context
+   of its own), so the card needs an opaque background. */
+.card.featured { position: relative; background: var(--paper); }
+.card.featured::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  transform: translate(5px, 5px);
+  z-index: -1;
+  background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3), var(--g4), var(--g5));
+}
 .card.featured > header {
   background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3), var(--g4), var(--g5));
   color: #fff;
@@ -615,7 +633,6 @@ a:focus-visible {
 .card-links { padding: 0 1rem 1rem; }
 
 /* Other projects: one compact row each, details still fold out. */
-.cards + .sub { margin-top: 2.5rem; }
 .rows {
   list-style: none;
   margin: 0;
@@ -747,6 +764,13 @@ a:focus-visible {
 
 .shot { margin: .5rem 0 1rem; }
 .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+/* The raw event frames are very saturated: tone them down by about 15%,
+   back to full colour on hover. */
+#p-ipal .shot img {
+  filter: saturate(.85) brightness(.93);
+  transition: filter .25s ease;
+}
+#p-ipal .shot img:hover { filter: none; }
 .shot figcaption {
   font: 400 .8125rem/1.5 var(--mono);
   color: var(--muted);
@@ -780,7 +804,7 @@ a:focus-visible {
 
 .foot-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
   gap: 2rem;
 }
 .foot-grid p { margin: 0; color: var(--ev-mute); }
@@ -829,7 +853,7 @@ a:focus-visible {
 /* --- narrow screens -------------------------------------------------- */
 
 @media (max-width: 52rem) {
-  .foot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .foot-brand { grid-column: 1 / -1; }
 }
 
