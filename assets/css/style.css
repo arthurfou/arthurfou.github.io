@@ -732,7 +732,6 @@ a:focus-visible {
   font: 400 .75rem/1.4 var(--mono);
   color: var(--muted);
 }
-.bb-empty { fill: #1d2026; }
 
 .card h3 {
   font: 600 1.25rem/1.3 var(--sans);
