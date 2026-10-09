@@ -246,40 +246,51 @@
     </nav>
   </article>
 
+
+  <article class="card" id="p-mppi">
+    <header>
+      <span>control · gpu <span class="tag live">in progress</span></span>
+      <span><time datetime="2026-09">sep 2026</time> → now</span>
+    </header>
+    <div class="in split split-wide">
+      <div class="split-text">
+        <h3>edge-mppi: real-time model predictive control on the GPU</h3>
+        <p>
+          A car-like vehicle racing around a track has to pick its next command every 20 ms.
+          I modelled it twice, first with a kinematic bicycle model, then with a dynamic one
+          with tyres, and implemented MPPI on top: at each step, a thousand noisy control
+          sequences are rolled through the model, scored, and averaged by
+          <code>exp(−cost/λ)</code>. Next comes a hand-written CUDA kernel, profiled and
+          optimised with Nsight to fit 8,192 rollouts in the 20 ms budget, then a
+          comparison against an established baseline. Work in progress.
+        </p>
+      </div>
+      <figure class="shot shot-video">
+        <div class="video-wrap">
+        <video src="assets/img/mppi-lap.mp4" poster="assets/img/mppi-lap.jpg"
+               autoplay muted loop playsinline width="1100" height="650"
+               aria-label="One lap of the MPPI controller on a closed track, zooming in on single iterations: 1,024 sampled trajectories coloured by cost, their weighted mean in red"></video>
+        <button type="button" class="fs-btn" hidden aria-label="Enlarge the video" title="Enlarge">⤢</button>
+        </div>
+        <figcaption>one lap with the dynamic model. Mid-lap, it slows down on single
+        iterations: 1,024 rollouts coloured by cost, their weighted mean in red.</figcaption>
+      </figure>
+    </div>
+    <dl class="kv">
+      <dt>where</dt><dd>personal project</dd>
+      <dt>stack</dt><dd>python · numpy · cuda · c++ · nsight</dd>
+    </dl>
+    <nav class="links card-links" aria-label="edge-mppi links">
+      <a href="https://github.com/arthurfou/edge-mppi">code ↗</a>
+    </nav>
+  </article>
+
   </div>
 </section>
 
 <section class="section" aria-labelledby="other">
   <h2 class="section-title" id="other">other projects</h2>
   <ul class="rows">
-    <li id="p-mppi">
-      <div class="row-meta">
-        <p><time datetime="2026-09">sep 2026</time> → now <span class="tag live">in progress</span></p>
-        <p class="row-stack">cuda · c++ · python</p>
-      </div>
-      <div class="row-body">
-        <h4>edge-mppi: real-time model predictive control on a Jetson</h4>
-        <p>MPPI control with a hand-written CUDA kernel. The target: 8,192 trajectories in under 20 ms on a Jetson.</p>
-        <details class="more">
-          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
-          <p>
-            At every control step, MPPI rolls thousands of noisy control sequences through the
-            vehicle dynamics, scores them and averages them by <code>exp(−cost/λ)</code>. The
-            rollouts are independent of each other but strictly sequential in time, a
-            pattern that maps badly onto cuBLAS or PyTorch. A fused kernel keeps the whole
-            vehicle state in registers for the full horizon and never writes a trajectory to
-            memory.
-          </p>
-          <p>
-            The roadmap: a NumPy reference, a dynamic bicycle model with tyres, a naive CUDA
-            port checked against NumPy on fixed noise, Nsight-driven optimisation, then
-            hardware-in-the-loop on the Jetson and a comparison against
-            <code>nav2_mppi_controller</code>. The project started in September 2026.
-          </p>
-        </details>
-      </div>
-      <p class="row-links"><a href="https://github.com/arthurfou/edge-mppi">code ↗</a></p>
-    </li>
     <!-- HIDDEN until the X-Forum website can be shown publicly.
          To show it again, delete this comment's first and last lines.
     <li id="p-xforum">
@@ -545,5 +556,6 @@
 
 <script src="assets/js/events.js" defer></script>
 <script src="assets/js/nav.js" defer></script>
+<script src="assets/js/fullscreen.js" defer></script>
 </body>
 </html>
