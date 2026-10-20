@@ -50,15 +50,13 @@
         I am an engineering student at <strong class="breathe">École polytechnique</strong>, now in my final
         year at <strong class="breathe">Mines Paris PSL</strong> on the robotics track. Trained broadly
         in AI, machine learning and deep learning, I specialise in robotics:
-        perception, computer vision and reinforcement learning. I am looking for a <span class="breathe">2027 internship in AI or robotics</span>, in France or abroad.<span class="caret" aria-hidden="true"></span>
+        perception, computer vision and reinforcement learning. I am looking for a <span class="breathe">final-year internship in AI or robotics from April 2027</span>, ideally six months long, in France or abroad.<span class="caret" aria-hidden="true"></span>
       </p>
       <nav class="links" aria-label="Profiles and contact">
         <a href="assets/docs/cv.pdf">cv.pdf</a>
         <a href="https://github.com/arthurfou">github</a>
         <a href="https://www.linkedin.com/in/arthurfou/">linkedin</a>
         <a href="mailto:arthur.fournier@polytechnique.edu">arthur.fournier@polytechnique.edu</a>
-        <!-- Keep a second, research-weighted CV here if you want one:
-        <a href="assets/docs/cv-research.pdf">cv-research.pdf</a> -->
       </nav>
       <p class="now"><span>now</span> final year at Mines Paris PSL · building <a href="#p-mppi">edge-mppi</a></p>
     </div>
@@ -105,8 +103,8 @@
         DEVO, assumes the world is static, and the people walking in front of the robot
         break that assumption exactly where it matters. I taught it to notice what moves on
         its own, and to stop trusting it: trained jointly with the odometry, the module cuts
-        the trajectory error by <strong class="hl-pos">41%</strong> on EVIMO2, and still by
-        <strong class="hl-neg">37%</strong> without a single segmentation label.
+        the trajectory error by <strong>41%</strong> on EVIMO2, and still by
+        <strong>37%</strong> without a single segmentation label.
       </p>
 
       <figure class="shot">
@@ -151,48 +149,6 @@
     </dl>
     <nav class="links card-links" aria-label="IPAL project links">
       <a href="https://github.com/arthurfou/MADEVO">code ↗</a>
-    </nav>
-  </article>
-
-  <article class="card" id="p-makeitalive">
-    <header>
-      <span>generative ai</span>
-      <span><time datetime="2026-02">feb</time> → <time datetime="2026-03">mar 2026</time></span>
-    </header>
-    <div class="in split">
-      <div class="split-text">
-        <h3>Makeitalive: animating a single landscape photo</h3>
-        <p>
-          We fine-tuned Stable Video Diffusion on 2,374 drone clips so that one still photo
-          turns into a short video with drone-like camera motion, where foreground and
-          background move at different speeds.
-        </p>
-        <details class="more">
-          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
-          <p>
-            A self-supervised U-Net that predicts an optical flow field and warps the pixels
-            is fast, but cannot invent what was hidden. LoRA adapters on SVD's temporal
-            attention (about 3.3 M trained parameters) only learned a slight parallax. Full
-            fine-tuning of the temporal layers with SVD_Xtend (5,000 steps, about 12 hours on
-            an A100) gave the cinematic motion shown here.
-          </p>
-        </details>
-      </div>
-      <figure class="media">
-        <video src="assets/img/makeitalive-square.mp4" poster="assets/img/makeitalive-square.jpg"
-               autoplay muted loop playsinline width="400" height="400"
-               aria-label="A single mountain photo animated by the fine-tuned model, with drone-like parallax"></video>
-        <figcaption>one photo in, motion out</figcaption>
-      </figure>
-    </div>
-    <dl class="kv">
-      <dt>course</dt><dd>École polytechnique, Generative AI</dd>
-      <dt>team</dt><dd>with Mathurin Petit</dd>
-      <dt>stack</dt><dd>pytorch · diffusers · peft · stable video diffusion</dd>
-    </dl>
-    <nav class="links card-links" aria-label="Makeitalive links">
-      <a href="https://github.com/matu1003/Makeitalive">code ↗</a>
-      <a href="https://github.com/matu1003/Makeitalive/blob/main/docs/report.pdf">report ↗</a>
     </nav>
   </article>
 
@@ -246,7 +202,6 @@
     </nav>
   </article>
 
-
   <article class="card" id="p-mppi">
     <header>
       <span>control · gpu <span class="tag live">in progress</span></span>
@@ -260,9 +215,12 @@
           I modelled it twice, first with a kinematic bicycle model, then with a dynamic one
           with tyres, and implemented MPPI on top: at each step, a thousand noisy control
           sequences are rolled through the model, scored, and averaged by
-          <code>exp(−cost/λ)</code>. Next comes a hand-written CUDA kernel, profiled and
-          optimised with Nsight to fit 8,192 rollouts in the 20 ms budget, then a
-          comparison against an established baseline. Work in progress.
+          <code>exp(−cost/λ)</code>. This part runs in Python and NumPy.
+        </p>
+        <p>
+          <strong>Next:</strong> a hand-written CUDA kernel, profiled and optimised with
+          Nsight to fit 8,192 rollouts in the 20 ms budget, then a comparison against an
+          established baseline.
         </p>
       </div>
       <figure class="shot shot-video">
@@ -278,10 +236,53 @@
     </div>
     <dl class="kv">
       <dt>where</dt><dd>personal project</dd>
-      <dt>stack</dt><dd>python · numpy · cuda · c++ · nsight</dd>
+      <dt>stack</dt><dd>python · numpy</dd>
+      <dt>next</dt><dd>cuda · c++ · nsight</dd>
     </dl>
     <nav class="links card-links" aria-label="edge-mppi links">
       <a href="https://github.com/arthurfou/edge-mppi">code ↗</a>
+    </nav>
+  </article>
+
+  <article class="card" id="p-makeitalive">
+    <header>
+      <span>generative ai</span>
+      <span><time datetime="2026-02">feb</time> → <time datetime="2026-03">mar 2026</time></span>
+    </header>
+    <div class="in split">
+      <div class="split-text">
+        <h3>Makeitalive: animating a single landscape photo</h3>
+        <p>
+          We fine-tuned Stable Video Diffusion on 2,374 drone clips so that one still photo
+          turns into a short video with drone-like camera motion, where foreground and
+          background move at different speeds.
+        </p>
+        <details class="more">
+          <summary><span class="closed">Read more</span><span class="opened">Show less</span></summary>
+          <p>
+            A self-supervised U-Net that predicts an optical flow field and warps the pixels
+            is fast, but cannot invent what was hidden. LoRA adapters on SVD's temporal
+            attention (about 3.3 M trained parameters) only learned a slight parallax. Full
+            fine-tuning of the temporal layers with SVD_Xtend (5,000 steps, about 12 hours on
+            an A100) gave the cinematic motion shown here.
+          </p>
+        </details>
+      </div>
+      <figure class="media">
+        <video src="assets/img/makeitalive-square.mp4" poster="assets/img/makeitalive-square.jpg"
+               autoplay muted loop playsinline width="400" height="400"
+               aria-label="A single mountain photo animated by the fine-tuned model, with drone-like parallax"></video>
+        <figcaption>one photo in, motion out</figcaption>
+      </figure>
+    </div>
+    <dl class="kv">
+      <dt>course</dt><dd>École polytechnique, Generative AI</dd>
+      <dt>team</dt><dd>with Mathurin Petit</dd>
+      <dt>stack</dt><dd>pytorch · diffusers · peft · stable video diffusion</dd>
+    </dl>
+    <nav class="links card-links" aria-label="Makeitalive links">
+      <a href="https://github.com/matu1003/Makeitalive">code ↗</a>
+      <a href="https://github.com/matu1003/Makeitalive/blob/main/docs/report.pdf">report ↗</a>
     </nav>
   </article>
 
@@ -291,8 +292,6 @@
 <section class="section" aria-labelledby="other">
   <h2 class="section-title" id="other">other projects</h2>
   <ul class="rows">
-    <!-- HIDDEN until the X-Forum website can be shown publicly.
-         To show it again, delete this comment's first and last lines.
     <li id="p-xforum">
       <div class="row-meta">
         <p><time datetime="2026-04">apr 2026</time> → now <span class="tag live">live</span></p>
@@ -317,7 +316,6 @@
       </div>
       <p class="row-links"><a href="https://xforum.binets.fr/">site ↗</a></p>
     </li>
-    END HIDDEN X-Forum website -->
     <li id="p-twitter">
       <div class="row-meta">
         <p><time datetime="2025-11">nov</time> → <time datetime="2025-12">dec 2025</time></p>
@@ -467,9 +465,8 @@
       <span class="when">2024–2026</span>
       <span class="what"><strong>X-Forum, logistics team</strong>, École polytechnique's
       careers fair. I organised security and the build of the venue, and handled the
-      companies' requests during the event.<!-- HIDDEN with the X-Forum website row:
-      I also co-built the forum's website.
-      <a class="jump" href="#p-xforum">project ↑</a> --></span>
+      companies' requests during the event. I also co-built the forum's website.
+      <a class="jump" href="#p-xforum">project ↑</a></span>
     </li>
     <li>
       <span class="when">2024–2025</span>
@@ -498,6 +495,8 @@
     <dd>PyTorch, Hugging Face (transformers, diffusers), scikit-learn, XGBoost, pandas, FAISS</dd>
     <dt>systems &amp; web</dt>
     <dd>CUDA, Git, CI/CD, Docker, Slurm, Weights &amp; Biases, React, Django, Streamlit</dd>
+    <dt>robotics</dt>
+    <dd>Pinocchio</dd>
     <dt>spoken</dt>
     <dd><span class="flag" aria-hidden="true">🇫🇷</span> French (native), <span class="flag" aria-hidden="true">🇬🇧</span> English (C1), <span class="flag" aria-hidden="true">🇪🇸</span> Spanish (B2)</dd>
   </dl>
@@ -554,7 +553,7 @@
     </div>
   </div>
   <div class="foot-base">
-    <p>© 2026 Arthur Fournier · last updated Sep 2026</p>
+    <p>© 2026 Arthur Fournier · last updated Oct 2026</p>
     <a href="#hero">back to top ↑</a>
   </div>
 </footer>

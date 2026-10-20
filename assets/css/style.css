@@ -623,10 +623,6 @@ a:focus-visible {
 .more:not([open]) .opened { display: none; }
 
 
-.hl-pos, .hl-neg { font-weight: 600; font-variant-numeric: tabular-nums; }
-.hl-pos { color: var(--pos); }
-.hl-neg { color: var(--neg); }
-
 .card code,
 .card kbd { font: 400 .875em/1 var(--mono); }
 
